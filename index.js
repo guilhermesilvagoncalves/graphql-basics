@@ -9,12 +9,17 @@ const typeDefs = gql`
         salario: Float
         vip: Boolean
     }
-    
-
+    type Produto{
+        nome: String!
+        preco: Float!
+        desconto: Float
+        precoComDesconto:Float
+    }
     type Query{
         ola: String
         horaAtual: Date
         usuarioLogado: Usuario
+        produtoEmDestaque: Produto
     }
 `
 
@@ -24,7 +29,12 @@ const resolvers = {
             console.log(usuario)
             return usuario.salario_real
         }        
-    },    
+    },
+    Produto: {
+        precoComDesconto(produto){
+            return produto.preco * produto.desconto
+        }
+    },
     Query: {
         ola() {
             return "Bom dia!"
@@ -38,6 +48,13 @@ const resolvers = {
                 nome: "Fulano de tal",
                 salario_real: 5240.20,
                 vip: false
+            }
+        },
+        produtoEmDestaque() {
+            return {
+                nome: "Carro muito top",
+                preco: 20000.00,
+                desconto: 0.225
             }
         }
     }
