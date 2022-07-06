@@ -32,7 +32,7 @@ const resolvers = {
     },
     Produto: {
         precoComDesconto(produto){
-            return produto.preco * produto.desconto
+            return produto.preco *  (1 - produto.desconto)
         }
     },
     Query: {
