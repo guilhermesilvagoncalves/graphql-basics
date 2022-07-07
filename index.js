@@ -1,5 +1,26 @@
 const { ApolloServer, gql} = require ('apollo-server')
 
+const users = [
+    {
+        id: 1,
+        nome: "Fulano de tal",
+        salario_real: 5240.20,
+        vip: false
+    },
+    {
+        id: 2,
+        nome: "Beltrano Silva",
+        salario_real: 10541.30,
+        vip: true
+    },
+    {
+        id: 3,
+        nome: "Ciclano Pereira",
+        salario_real: 2032.30,
+        vip: false
+    }
+]
+
 const typeDefs = gql`
     scalar Date
 
@@ -12,7 +33,7 @@ const typeDefs = gql`
     type Produto{
         nome: String!
         preco: Float!
-        desconto: Float
+        desconto: String
         precoComDesconto:Float
     }
     type Query{
@@ -20,6 +41,7 @@ const typeDefs = gql`
         horaAtual: Date
         usuarioLogado: Usuario
         produtoEmDestaque: Produto
+        usuariosLogados:[Usuario]
     }
 `
 
@@ -33,6 +55,9 @@ const resolvers = {
     Produto: {
         precoComDesconto(produto){
             return produto.preco *  (1 - produto.desconto)
+        },
+        desconto(produto){
+            return produto.desconto * 100+"%"
         }
     },
     Query: {
@@ -43,12 +68,10 @@ const resolvers = {
             return `${new Date()}`
         },
         usuarioLogado() {
-            return {
-                id: 1,
-                nome: "Fulano de tal",
-                salario_real: 5240.20,
-                vip: false
-            }
+            return users[0]
+        },
+        usuariosLogados() {
+            return users
         },
         produtoEmDestaque() {
             return {
