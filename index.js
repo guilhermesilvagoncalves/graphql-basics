@@ -5,19 +5,33 @@ const users = [
         id: 1,
         nome: "Fulano de tal",
         salario_real: 5240.20,
-        vip: false
+        vip: false,
+        perfil_id: 1
     },
     {
         id: 2,
         nome: "Beltrano Silva",
         salario_real: 10541.30,
-        vip: true
+        vip: true,
+        perfil_id: 2
     },
     {
         id: 3,
         nome: "Ciclano Pereira",
         salario_real: 2032.30,
-        vip: false
+        vip: false,
+        perfil_id: 1
+    }
+]
+
+const perfis = [
+    {
+        id: 1,
+        nome: "Comum"
+    },
+    {
+        id: 2,
+        nome: "Administrador"
     }
 ]
 
@@ -28,13 +42,18 @@ const typeDefs = gql`
         id: Int
         nome: String
         salario: Float
-        vip: Boolean
+        vip: Boolean,
+        perfil: Perfil
     }
     type Produto{
         nome: String!
         preco: Float!
         desconto: String
         precoComDesconto:Float
+    }
+    type Perfil{
+        id: ID!
+        nome: String
     }
     type Query{
         ola: String
@@ -43,6 +62,8 @@ const typeDefs = gql`
         usuario(id: Int): Usuario
         produtoEmDestaque: Produto
         usuariosLogados:[Usuario]
+        perfil(id: ID): Perfil
+        perfis: [Perfil]
     }
 `
 
@@ -51,7 +72,10 @@ const resolvers = {
         salario(usuario){
             console.log(usuario)
             return usuario.salario_real
-        }        
+        },
+        perfil(usuario){
+            return perfis.find(p => p.id == usuario.id)
+        }
     },
     Produto: {
         precoComDesconto(produto){
@@ -84,6 +108,12 @@ const resolvers = {
                 preco: 20000.00,
                 desconto: 0.225
             }
+        },
+        perfis() {
+            return perfis
+        },
+        perfil(_, { id }){
+            return perfis.find(p => p.id == id)
         }
     }
 }
