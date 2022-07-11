@@ -25,7 +25,7 @@ const typeDefs = gql`
     scalar Date
 
     type Usuario{
-        id: ID!
+        id: Int
         nome: String
         salario: Float
         vip: Boolean
@@ -40,6 +40,7 @@ const typeDefs = gql`
         ola: String
         horaAtual: Date
         usuarioLogado: Usuario
+        usuario(id: Int): Usuario
         produtoEmDestaque: Produto
         usuariosLogados:[Usuario]
     }
@@ -72,6 +73,10 @@ const resolvers = {
         },
         usuariosLogados() {
             return users
+        },
+        usuario(_, { id }) {
+            return users
+                    .find(u => u.id === id)
         },
         produtoEmDestaque() {
             return {
