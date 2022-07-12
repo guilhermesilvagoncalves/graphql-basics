@@ -1,0 +1,4 @@
+type Perfil{
+    id: ID!
+    nome: String
+}
