@@ -1,6 +1,11 @@
+let id = 1
+function proximoID(){
+    return id++
+}
+
 const usuarios = [
     {
-        id: 1,
+        id: proximoID(),
         nome: "Fulano de tal",
         salario_real: 5240.20,
         vip: false,
@@ -8,7 +13,7 @@ const usuarios = [
         status: 'ATIVO'
     },
     {
-        id: 2,
+        id: proximoID(),
         nome: "Beltrano Silva",
         salario_real: 10541.30,
         vip: true,
@@ -16,7 +21,7 @@ const usuarios = [
         status: 'INATIVO'
     },
     {
-        id: 3,
+        id: proximoID(),
         nome: "Ciclano Pereira",
         salario_real: 2032.30,
         vip: false,
@@ -36,4 +41,4 @@ const perfis = [
     }
 ]
 
-module.exports = { usuarios, perfis }
+module.exports = { usuarios, perfis, proximoID }

@@ -14,3 +14,20 @@ type Query{
     perfil(id: ID): Perfil
     perfis: [Perfil]
 }
+
+type Mutation {
+    novoUsuario(
+        nome: String,
+        salario: Float,
+        vip: Boolean
+    ): Usuario!
+    excluirUsuario(
+        id: Int
+    ): Usuario
+    alterarUsuario(
+        id: Int,
+        nome: String,
+        salario: Float,
+        vip:Boolean
+    ): Usuario
+}
