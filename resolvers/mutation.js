@@ -1,23 +1,22 @@
-const {usuarios, proximoID } = require('../data/db')
+const { usuarios, proximoID } = require('../data/db')
+const { procurarIndex } = require ('./utils/filter')
 
 module.exports = {
-    novoUsuario(_, {nome, salario, vip}){
-        const emailExists = usuarios.some(u => u.nome == nome)
+    novoUsuario(_, { dados }){
+        const emailExists = usuarios.some(u => u.nome == dados.nome)
         if (emailExists) throw new Error('Nome já cadastrado')
         const novo = {
             id: proximoID(),
-            nome,
-            salario,
-            vip,
+            ...dados,
             perfil_id: 1,
             status: 'ATIVO'
         }
+        novo.salario_real = dados.salario
         usuarios.push(novo)
         return novo
     },
-    excluirUsuario(_, {id}){
-        console.log(id)
-        const i = usuarios.findIndex(u => u.id === id)
+    excluirUsuario(_, {filtro}){
+        const i = procurarIndex(filtro)
         if (i<0) return null
         const excluidos = usuarios.splice(i, 1)
         return excluidos ? excluidos[0] : null

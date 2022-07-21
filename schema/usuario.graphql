@@ -12,3 +12,14 @@ type Usuario{
     perfil: Perfil,
     status: UsuarioStatus
 }
+
+input UsuarioInput{
+    nome: String
+    salario: Float
+    vip: Boolean
+}
+
+input UsuarioFiltro{
+    id: Int
+    nome: String
+}

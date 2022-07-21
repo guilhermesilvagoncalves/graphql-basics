@@ -17,12 +17,10 @@ type Query{
 
 type Mutation {
     novoUsuario(
-        nome: String,
-        salario: Float,
-        vip: Boolean
+        dados: UsuarioInput!
     ): Usuario!
     excluirUsuario(
-        id: Int
+        filtro: UsuarioFiltro!
     ): Usuario
     alterarUsuario(
         id: Int,
